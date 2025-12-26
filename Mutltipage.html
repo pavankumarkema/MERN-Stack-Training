@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Accessible Multi-Step Form</title>
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container {
+  background: #fff;
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.progress-bar::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #ddd;
+  transform: translateY(-50%);
+}
+
+.progress-step {
+  width: 40px;
+  height: 40px;
+  background: #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.progress-step.active,
+.progress-step.completed {
+  background: #4caf50;
+  color: #fff;
+}
+
+.form-step {
+  display: none;
+}
+
+.form-step.active {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+input:focus, select:focus {
+  outline: 2px solid #4caf50;
+}
+
+.error-message {
+  display: none;
+  color: #e74c3c;
+  font-size: 14px;
+}
+
+.success-icon {
+  display: none;
+  color: #4caf50;
+  margin-left: 5px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-next, .btn-submit {
+  background: #4caf50;
+  color: white;
+}
+
+.btn-prev {
+  background: #ddd;
+}
+</style>
+</head>
+
+<body>
+<div class="form-container">
+
+<div class="progress-bar">
+  <div class="progress-step active" id="step-1-indicator">1</div>
+  <div class="progress-step" id="step-2-indicator">2</div>
+  <div class="progress-step" id="step-3-indicator">3</div>
+</div>
+
+<form id="multi-step-form" novalidate>
+
+<!-- STEP 1 -->
+<div class="form-step active" id="step-1">
+  <div class="form-group">
+    <label for="name">Full Name *</label>
+    <input id="name" aria-required="true" aria-describedby="name-error" />
+    <i class="fas fa-check-circle success-icon"></i>
+    <div class="error-message" id="name-error" role="alert"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email *</label>
+    <input id="email" aria-required="true" aria-describedby="email-error" />
+    <i class="fas fa-check-circle success-icon"></i>
+    <div class="error-message" id="email-error" role="alert"></div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="form-step" id="step-2">
+  <div class="form-group">
+    <label for="username">Username *</label>
+    <input id="username" aria-required="true" aria-describedby="username-error" />
+    <i class="fas fa-check-circle success-icon"></i>
+    <div class="error-message" id="username-error" role="alert"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password *</label>
+    <input type="password" id="password" aria-required="true" aria-describedby="password-error" />
+    <i class="fas fa-check-circle success-icon"></i>
+    <div class="error-message" id="password-error" role="alert"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="confirm-password">Confirm Password *</label>
+    <input type="password" id="confirm-password" aria-required="true" aria-describedby="confirm-password-error" />
+    <i class="fas fa-check-circle success-icon"></i>
+    <div class="error-message" id="confirm-password-error" role="alert"></div>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="form-step" id="step-3">
+  <div class="form-group">
+    <input type="checkbox" id="terms" />
+    <label for="terms">Accept Terms *</label>
+    <div class="error-message" id="terms-error" role="alert"></div>
+  </div>
+</div>
+
+<div class="form-actions">
+  <button type="button" id="prevBtn" disabled class="btn-prev">Previous</button>
+  <button type="button" id="nextBtn" class="btn-next">Next</button>
+  <button type="submit" id="submitBtn" class="btn-submit" style="display:none">Submit</button>
+</div>
+
+</form>
+</div>
+
+<script>
+const steps = document.querySelectorAll(".form-step");
+const indicators = document.querySelectorAll(".progress-step");
+let currentStep = 0;
+
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const submitBtn = document.getElementById("submitBtn");
+
+function showStep(index) {
+  steps.forEach(s => s.classList.remove("active"));
+  indicators.forEach(i => i.classList.remove("active"));
+
+  steps[index].classList.add("active");
+  indicators[index].classList.add("active");
+
+  prevBtn.disabled = index === 0;
+  nextBtn.style.display = index === steps.length - 1 ? "none" : "inline-block";
+  submitBtn.style.display = index === steps.length - 1 ? "inline-block" : "none";
+}
+
+function setError(input, msg) {
+  const error = input.parentElement.querySelector(".error-message");
+  const icon = input.parentElement.querySelector(".success-icon");
+
+  error.textContent = msg;
+  error.style.display = "block";
+  input.setAttribute("aria-invalid", "true");
+  icon.style.display = "none";
+  input.focus();
+}
+
+function setSuccess(input) {
+  const error = input.parentElement.querySelector(".error-message");
+  const icon = input.parentElement.querySelector(".success-icon");
+
+  if (!input.value.trim()) {
+    icon.style.display = "none";
+    return;
+  }
+
+  error.style.display = "none";
+  input.removeAttribute("aria-invalid");
+  icon.style.display = "inline";
+}
+
+function validateStep() {
+  let valid = true;
+
+  if (currentStep === 0) {
+    const name = document.getElementById("name");
+    const email = document.getElementById("email");
+
+    if (name.value.trim().length < 3) {
+      setError(name, "Minimum 3 characters");
+      valid = false;
+    } else setSuccess(name);
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      setError(email, "Invalid email");
+      valid = false;
+    } else setSuccess(email);
+  }
+
+  if (currentStep === 1) {
+    const pass = document.getElementById("password");
+    const confirm = document.getElementById("confirm-password");
+
+    if (pass.value.length < 8) {
+      setError(pass, "Minimum 8 characters");
+      valid = false;
+    } else setSuccess(pass);
+
+    if (confirm.value !== pass.value) {
+      setError(confirm, "Passwords do not match");
+      valid = false;
+    } else setSuccess(confirm);
+  }
+
+  if (currentStep === 2) {
+    if (!document.getElementById("terms").checked) {
+      document.getElementById("terms-error").textContent = "Required";
+      document.getElementById("terms-error").style.display = "block";
+      valid = false;
+    }
+  }
+
+  return valid;
+}
+
+nextBtn.onclick = () => {
+  if (validateStep()) {
+    indicators[currentStep].classList.add("completed");
+    currentStep++;
+    showStep(currentStep);
+  }
+};
+
+prevBtn.onclick = () => {
+  currentStep--;
+  showStep(currentStep);
+};
+
+document.getElementById("multi-step-form").onsubmit = e => {
+  e.preventDefault();
+  if (validateStep()) {
+    alert("Form submitted successfully 🎉");
+  }
+};
+</script>
+
+</body>
+</html>

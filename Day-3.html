@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSD Training Day-3</title>
+
+    <style>
+        /* =========================
+           FLEXBOX EXAMPLE
+        ========================== */
+        #box {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .box1 {
+            background-color: aqua;
+            height: 100px;
+            width: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid black;
+        }
+
+        /* =========================
+           GRID BASIC EXAMPLE
+        ========================== */
+        #boxes {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .box2 {
+            height: 100px;
+            width: 100px;
+            background-color: aqua;
+            border: 2px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* =========================
+           PAGE STYLING
+        ========================== */
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+            font-family: Georgia, serif;
+        }
+
+        /* =========================
+           GRID TEMPLATE AREAS
+        ========================== */
+        .container {
+            display: grid;
+            grid-template-areas:
+                "header header header"
+                "menu main right"
+                "menu footer footer";
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: 100px 200px 100px;
+            gap: 15px;
+            padding: 15px;
+            background-color: #ddd;
+        }
+
+        /* Common grid box styling */
+        .container div {
+            border: 6px solid #cfcfcf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #222;
+        }
+
+        /* =========================
+           INDIVIDUAL GRID COLORS
+        ========================== */
+        .header {
+            grid-area: header;
+            background-color: olive;
+        }
+
+        .menu {
+            grid-area: menu;
+            background-color: orange;
+        }
+
+        .main {
+            grid-area: main;
+            background-color: blue;
+            color: white;
+        }
+
+        .right {
+            grid-area: right;
+            background-color: gold;
+        }
+
+        .footer {
+            grid-area: footer;
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Flexbox Layout</h2>
+    <div id="box">
+        <div class="box1">Box</div>
+        <div class="box1">Box</div>
+        <div class="box1">Box</div>
+        <div class="box1">Box</div>
+    </div>
+
+    <hr>
+
+    <h2>Grid Layout</h2>
+    <div id="boxes">
+        <div class="box2">Box</div>
+        <div class="box2">Box</div>
+        <div class="box2">Box</div>
+        <div class="box2">Box</div>
+    </div>
+
+    <hr>
+
+    <h2>Grid Template Areas Layout</h2>
+    <div class="container">
+        <div class="header">Header</div>
+        <div class="menu">Menu</div>
+        <div class="main">Main</div>
+        <div class="right">Right</div>
+        <div class="footer">Footer</div>
+    </div>
+
+</body>
+</html>
