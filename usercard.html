@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Card</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f2f2f2;
+        }
+
+        .card {
+            width: 340px;
+            padding: 20px;
+            border-radius: 14px;
+             background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .field {
+            background: white;
+            color: black;
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card" id="userCard">
+        <h2>User1</h2>
+       
+
+        <div class="field" id="id"></div>
+        <div class="field" id="name"></div>
+        <div class="field" id="username"></div>
+        <div class="field" id="email"></div>
+        <div class="field" id="phone"></div>
+        <div class="field" id="city"></div>
+        <div class="field" id="company"></div>
+    </div>
+
+    <script>
+        const fetchdata = async () => {
+            const res = await fetch("https://jsonplaceholder.typicode.com/users/1");
+            const data = await res.json();
+
+            document.getElementById("id").innerText = `ID: ${data.id}`;
+            document.getElementById("name").innerText = `Name: ${data.name}`;
+            document.getElementById("username").innerText = `Username: ${data.username}`;
+            document.getElementById("email").innerText = `Email: ${data.email}`;
+            document.getElementById("phone").innerText = `Phone: ${data.phone}`;
+            document.getElementById("city").innerText = `City: ${data.address.city}`;
+            document.getElementById("company").innerText = `Company: ${data.company.name}`;
+        };
+
+        fetchdata();
+    </script>
+
+</body>
+</html>
