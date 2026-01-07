@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSD Training Day-9</title>
+    <style>
+        #strengthMeter {
+            width: 100px;
+            height: 10px;
+            background-color: white;
+            margin:5px 0;
+        }
+        #strengthBar{
+            height: 100%;
+            width: 0;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <label>Password</label>
+    <input type="password" id="passwordInput" oninput="checkPasswordStrength()">
+    <div id="strengthMeter">
+        <div id="strengthBar"></div>
+    </div>
+    <p id="strengthText">Strength :week</p>
+    <script>
+        function checkPasswordStrength() {
+            const password = document.getElementById('passwordInput').value;
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[\W]/.test(password)) strength++;
+
+            switch(strength) {
+                case 0:
+                case 1:
+                    strengthBar.style.width = '25%';
+                    strengthBar.style.backgroundColor = 'red';
+                    strengthText.textContent = 'Strength: Weak';
+                    break;
+                case 2:
+                    strengthBar.style.width = '50%';
+                    strengthBar.style.backgroundColor = 'orange';
+                    strengthText.textContent = 'Strength: Fair';
+                    break;
+                case 3:
+                    strengthBar.style.width = '75%';
+                    strengthBar.style.backgroundColor = 'yellowgreen';
+                    strengthText.textContent = 'Strength: Good';
+                    break;
+                case 4:
+                    strengthBar.style.width = '100%';
+                    strengthBar.style.backgroundColor = 'green';
+                    strengthText.textContent = 'Strength: Strong';
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

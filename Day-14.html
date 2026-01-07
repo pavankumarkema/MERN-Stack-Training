@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .inputdiv{
+            background:darkslategrey;
+            color:aliceblue;
+            display: flex;
+            flex-direction: row;
+            gap:20px;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+
+        }
+        input{
+            padding:10px;
+
+        }
+        button{
+            background:red;
+            color:lightgrey;
+            padding:10px;
+            border-radius:10px;
+            cursor:pointer
+        }
+        button:hover{
+            background:green;
+        }
+        #userdata{
+            background:darkcyan;
+            color:lightskyblue;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction:column;
+            gap:20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="inputdiv">
+        <input type="number" id="userinput">
+        <button onclick="callerfunction()">Fetch User</button>
+        <button onclick="randomfunction()">random User</button>
+
+    </div>
+    <div id="userdata">
+
+    </div>
+    <script>
+        const fetchdata = async (userinput) => {
+            const res = await fetch(`https://jsonplaceholder.typicode.com/users/${userinput}`);
+            if (!res.ok) {
+                alert("failed to fetch");
+                return;
+            }
+            const data = await res.json();
+            if (!data) {
+                alert("data is not exists");
+                return;
+            }
+            alert(`welcome:${data.name}`)
+            document.getElementById('userdata').innerHTML=`
+            <h1>${data.name}</h1>
+            <h1>${data.email}</h1>`
+        }
+        const callerfunction = () => {
+            const userinput = document.getElementById('userinput').value;
+            if (!userinput) {
+                alert("enter user input");
+                return;
+            }
+            console.log(userinput);
+            fetchdata(userinput);
+        }
+
+        const randomfunction=()=>{
+            const userinput = document.getElementById('userinput')
+            const randominput=Math.round(Math.random()*10)+1;
+            userinput.value=randominput
+            console.log(randominput)
+            if (!randominput) {
+                alert("enter user input");
+                return;
+            }
+            fetchdata(randominput);
+        }
+    </script>
+</body>
+</html>

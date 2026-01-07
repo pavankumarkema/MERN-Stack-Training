@@ -1,0 +1,31 @@
+#box {
+   background-color: blue;
+   color: white; 
+   padding: 20px;
+   width: 200px;
+        }
+.heading {
+            color: red;
+        }
+.blue-button {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            margin: 5px;}
+ #outer {
+            font-size: 25px;
+        }
+
+        #inner {
+            font-size: 10px;
+        }
+ .circle {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            border-radius: 50%;
+        }
+*{
+    background-color: rgba(220, 223, 220, 0.846);
+}

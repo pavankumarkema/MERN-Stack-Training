@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Debounce vs Throttle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="btn">Trigger Event</button>
+    <p id="pressed">Button Pressed: 0</p>
+    <p id="triggered">Triggered: 0</p>
+
+    <script>
+        let pressedCount = 0;
+        let triggeredCount = 0;
+
+        const button = document.getElementById("btn");
+        const pressedText = document.getElementById("pressed");
+        const triggeredText = document.getElementById("triggered");
+
+        // ---------------- DEBOUNCE ----------------
+        function debounce(func, delay) {
+            let timer;
+            return function () {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    func();
+                }, delay);
+            };
+        }
+
+        // ---------------- THROTTLE ----------------
+        function throttle(func, delay) {
+            let lastTime = 0;
+            return function () {
+                const currentTime = Date.now();
+                if (currentTime - lastTime >= delay) {
+                    lastTime = currentTime;
+                    func();
+                }
+            };
+        }
+
+        // Choose ONE of the following 👇
+
+        // const handler = debounce(() => {
+        //     triggeredCount++;
+        //     triggeredText.innerText = "Triggered: " + triggeredCount;
+        // }, 800);
+
+        const handler = throttle(() => {
+            triggeredCount++;
+            triggeredText.innerText = "Triggered: " + triggeredCount;
+        }, 800);
+
+        button.addEventListener("click", () => {
+            pressedCount++;
+            pressedText.innerText = "Button Pressed: " + pressedCount;
+            handler();
+        });
+    </script>
+
+</body>
+</html>

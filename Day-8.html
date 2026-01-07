@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Registration Form</title>
+
+    <style>
+        /* Center the form */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;   /* horizontal center */
+            align-items: center;       /* vertical center */
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        /* Form box */
+        form {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            width: 320px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 6px;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        small {
+            color: red;
+        }
+
+        .success {
+            border: 2px solid green;
+        }
+
+        .error {
+            border: 2px solid red;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<form id="regForm">
+
+    <h2>Registration Form</h2>
+
+    <label>Name</label>
+    <input type="text" id="name">
+    <small id="nameError"></small>
+
+    <label>Email</label>
+    <input type="text" id="email">
+    <small id="emailError"></small>
+
+    <label>Password</label>
+    <input type="password" id="password">
+    <small id="passwordError"></small>
+
+    <label>Phone</label>
+    <input type="text" id="phone">
+    <small id="phoneError"></small>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    const nameRegex = /^[A-Za-z ]{3,}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const phoneRegex = /^[0-9]{10}$/;
+
+    document.getElementById("name").addEventListener("input", function () {
+        const err = document.getElementById("nameError");
+        if (!nameRegex.test(this.value)) {
+            err.textContent = "Min 3 letters only";
+            this.className = "error";
+        } else {
+            err.textContent = "";
+            this.className = "success";
+        }
+    });
+
+    document.getElementById("email").addEventListener("input", function () {
+        const err = document.getElementById("emailError");
+        if (!emailRegex.test(this.value)) {
+            err.textContent = "Invalid email format";
+            this.className = "error";
+        } else {
+            err.textContent = "";
+            this.className = "success";
+        }
+    });
+
+    document.getElementById("password").addEventListener("input", function () {
+        const err = document.getElementById("passwordError");
+        if (!passwordRegex.test(this.value)) {
+            err.textContent = "8 chars, capital, small & number";
+            this.className = "error";
+        } else {
+            err.textContent = "";
+            this.className = "success";
+        }
+    });
+
+    document.getElementById("phone").addEventListener("input", function () {
+        const err = document.getElementById("phoneError");
+        if (!phoneRegex.test(this.value)) {
+            err.textContent = "10 digit phone number";
+            this.className = "error";
+        } else {
+            err.textContent = "";
+            this.className = "success";
+        }
+    });
+
+    document.getElementById("regForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        alert("Registration Successful ✅");
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSD Training Day-4</title>
+    <style>
+        /* Heading */
+        h1 {
+            font-size: 50px;
+            background: aqua;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Responsive Heading */
+        @media (max-width: 1200px) {
+            h1 {
+                font-size: 40px;
+                background: black;
+            }
+        }
+
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 30px;
+                background: red;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+                background: blue;
+            }
+        }
+
+        /* Boxes */
+        #box {
+            display: flex;
+            gap: 20px;
+        }
+
+        .box1 {
+            height: 100px;
+            width: 100px;
+            background-color: greenyellow;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            #box {
+                flex-direction: column;
+            }
+        }
+
+        /* Navbar */
+        #main {
+            background: black;
+            color: aliceblue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .title h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .list ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .list ul li {
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .list ul li:hover {
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>This is showing the Responsiveness</h1>
+    <hr>
+    <div id="box">
+        <div class="box1">Box 1</div>
+        <div class="box1">Box 2</div>
+        <div class="box1">Box 3</div>
+        <div class="box1">Box 4</div>
+    </div>
+    <hr>
+    <nav>
+        <div id="main">
+            <div class="title">
+                <h2>NAVBAR</h2>
+            </div>
+
+            <div class="list">
+                <ul>
+                    <li>Home</li>
+                    <li>About</li>
+                    <li>Services</li>
+                    <li>Contact</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>
